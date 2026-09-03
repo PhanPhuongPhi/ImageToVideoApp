@@ -1,3 +1,97 @@
 <resources>
-    <string name="app_name">ImageToVideoApp</string>
+    <string name="app_name">Image To Video</string>
+
+    <!-- Nav Titles -->
+    <string name="nav_studio">Studio</string>
+    <string name="nav_creations">Bộ sưu tập</string>
+    <string name="nav_explore">Khám phá</string>
+    <string name="nav_profile">Tài khoản</string>
+
+    <!-- Studio -->
+    <string name="studio_title">AI Video Generator</string>
+    <string name="studio_select_image">Tải ảnh đầu vào</string>
+    <string name="studio_prompt_hint">Mô tả chuyển động (VD: Camera zoom in slow motion, cinematic lighting&#8230;)</string>
+    <string name="studio_subtitle">Tạo video chuyển động ấn tượng từ bức ảnh của bạn</string>
+    <string name="studio_placeholder_text">Chạm để chọn từ thư viện</string>
+    <string name="studio_prompt_label">Mô Tả Chuyển Động (Prompt)</string>
+    <string name="studio_processing">Đang xử lý tạo video AI&#8230; (%1$ds)</string>
+    <string name="studio_result_title">Kết Quả AI Video</string>
+    <string name="studio_btn_save">Lưu vào bộ sưu tập App</string>
+    <string name="studio_save_success">Đã lưu video vào App thành công!</string>
+    <string name="studio_save_error">Lỗi khi lưu video!</string>
+    <string name="creations_title">Bộ Sưu Tập Video</string>
+    <string name="creations_subtitle">Tất cả các tác phẩm video AI đã khởi tạo của bạn</string>
+    <string name="credits_balance">%1$s Credits</string>
+    <string name="credits_default">0 Credits</string>
+    <string name="profile_title">Thông Tin Tài Khoản</string>
+    <string name="profile_credit_label">Số dư Credit hiện tại:</string>
+    <string name="logout_btn">Đăng Xuất</string>
+    <string name="desc_app_logo">Logo ứng dụng</string>
+    <string name="desc_preview_image">Ảnh xem trước</string>
+    <string name="desc_credit_icon">Icon Credits</string>
+    <string name="studio_btn_generate">Tạo Video (1 Credit)</string>
+    <string name="studio_generating">Đang sinh video AI...</string>
+
+    <!-- Auth -->
+    <string name="login">Đăng nhập</string>
+    <string name="register">Đăng ký</string>
+    <string name="verify_otp">Xác thực OTP</string>
+    <string name="email_hint">Địa chỉ Email</string>
+    <string name="password_hint">Mật khẩu</string>
+    <string name="otp_hint">Nhập mã OTP 6 chữ số</string>
+
+    <!-- Admin -->
+    <string name="admin_panel_title">Admin Control Panel</string>
+    <string name="admin_grant_subtitle">Grant Credits to User</string>
+    <string name="admin_email_hint">User Email</string>
+    <string name="admin_amount_hint">Credit Amount</string>
+    <string name="admin_btn_grant">Grant Credits</string>
+    <string name="admin_fill_fields">Please fill all fields</string>
+    <string name="admin_invalid_amount">Invalid amount</string>
+    <string name="admin_grant_success">Successfully granted %1$d credits to %2$s</string>
+    <string name="admin_grant_failed">Failed to grant credits: %1$s</string>
+
+    <!-- Credit History & Packages -->
+    <string name="credit_history_title">Lịch sử giao dịch</string>
+    <string name="credit_packages_title">Mua thêm Credit</string>
+    <string name="credit_history_empty">Chưa có giao dịch nào.</string>
+    <string name="credit_buy_now">Mua ngay</string>
+    <string name="credit_purchase_success">Nạp credit thành công!</string>
+    <string name="credit_insufficient">Bạn không đủ Credit. Vui lòng nạp thêm!</string>
+
+    <!-- Admin Dashboard -->
+    <string name="admin_stats_total_users">Tổng User</string>
+    <string name="admin_stats_new_users">User Mới (Hôm nay)</string>
+    <string name="admin_stats_videos_success">Video Thành Công</string>
+    <string name="admin_stats_videos_failed">Video Thất Bại</string>
+    <string name="admin_stats_revenue">Doanh Thu</string>
+    <string name="admin_stats_active_promotions">Khuyến Mãi Đang Chạy</string>
+
+    <!-- Admin Tabs -->
+    <string name="admin_tab_dashboard">Thống kê</string>
+    <string name="admin_tab_users">Người dùng</string>
+    <string name="admin_tab_videos">Video</string>
+    <string name="admin_tab_promotions">Khuyến mãi</string>
+    <string name="admin_tab_settings">Cài đặt</string>
+
+    <!-- Admin User Management -->
+    <string name="admin_user_search_hint">Tìm kiếm email...</string>
+    <string name="admin_user_lock">Khóa</string>
+    <string name="admin_user_unlock">Mở khóa</string>
+    <string name="admin_user_status_active">Hoạt động</string>
+    <string name="admin_user_status_locked">Đã khóa</string>
+
+    <!-- Admin Promotions -->
+    <string name="admin_promo_create">Tạo khuyến mãi</string>
+    <string name="admin_promo_name">Tên khuyến mãi</string>
+    <string name="admin_promo_reward">Số Credit tặng</string>
+    <string name="admin_promo_start">Ngày bắt đầu</string>
+    <string name="admin_promo_end">Ngày kết thúc</string>
+    <string name="admin_promo_success">Đã tạo chương trình khuyến mãi thành công!</string>
+
+    <!-- Studio Ratio -->
+    <string name="studio_ratio_label">Tỉ lệ Video (Ratio)</string>
+    <string name="studio_ratio_169">16:9</string>
+    <string name="studio_ratio_916">9:16</string>
+    <string name="studio_ratio_11">1:1</string>
 </resources>

@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Backgrounds (Dark AI Mode) -->
+    <color name="bg_main">#0B0F19</color>
+    <color name="bg_card">#131927</color>
+    <color name="bg_card_stroke">#1A233A</color>
+    <color name="bg_input">#0D121F</color>
+
+    <!-- Accents -->
+    <color name="purple_accent">#8B5CF6</color>
+    <color name="purple_dark">#6D28D9</color>
+    <color name="cyan_accent">#06B6D4</color>
+    <color name="emerald_accent">#10B981</color>
+    <color name="red_accent">#EF4444</color>
+
+    <!-- Text colors -->
+    <color name="text_primary">#F3F4F6</color>
+    <color name="text_secondary">#9CA3AF</color>
+    <color name="text_muted">#6B7280</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- Bottom Nav Selector tint -->
+    <color name="nav_item_active">#8B5CF6</color>
+    <color name="nav_item_inactive">#6B7280</color>
 </resources>
