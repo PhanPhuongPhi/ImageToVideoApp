@@ -1,6 +1,7 @@
 package com.imagetovideo.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,8 +59,10 @@ class CreationsFragment : Fragment() {
                     adapter.submitList(res.body()!!.items)
                 }
             } catch (e: Exception) {
+                Log.e("Creation", e.localizedMessage ?: "Unknown")
                 if (_binding != null) {
-                    Toast.makeText(context, R.string.msg_load_creations_error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.msg_load_creations_error, Toast.LENGTH_SHORT)
+                        .show()
                 }
             } finally {
                 _binding?.swipeRefresh?.isRefreshing = false
@@ -74,25 +77,25 @@ class CreationsFragment : Fragment() {
             .create()
 
         dialogBinding.txtPlayerPrompt.text = video.prompt
-        
+
         val fullVideoUrl = RetrofitClient.resolveMediaUrl(video.videoUrl)
-        
+
         val player = ExoPlayer.Builder(requireContext()).build().apply {
             setMediaItem(MediaItem.fromUri(fullVideoUrl))
             prepare()
             playWhenReady = true
         }
-        
+
         dialogBinding.dialogPlayerView.player = player
-        
+
         dialogBinding.btnClosePlayer.setOnClickListener {
             dialog.dismiss()
         }
-        
+
         dialog.setOnDismissListener {
             player.release()
         }
-        
+
         dialog.show()
     }
 

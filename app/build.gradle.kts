@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -8,12 +10,26 @@ android {
     namespace = "com.imagetovideo.app"
     compileSdk = 37
 
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
+
+    val properties = Properties()
+    val localPropertiesFile = project.rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.inputStream())
+    }
+    val apiUrl = properties.getProperty("api.url") ?: "\"http://10.0.2.2:8000/\""
+
     defaultConfig {
         applicationId = "com.imagetovideo.app"
         minSdk = 26
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
+
+        buildConfigField("String", "BASE_URL", apiUrl)
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -33,10 +49,6 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
@@ -45,6 +57,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
+    implementation(libs.androidx.datastore.preferences)
 
     // Navigation
     implementation(libs.androidx.navigation.fragment.ktx)

@@ -1,6 +1,7 @@
 package com.imagetovideo.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +21,7 @@ class AdminSettingsFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAdminSettingsBinding.inflate(inflater, container, false)
         return binding.root
@@ -29,7 +29,7 @@ class AdminSettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         loadSettings()
 
         binding.btnGrantCredits.setOnClickListener {
@@ -70,6 +70,7 @@ class AdminSettingsFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 // Thất bại cũng không sao, dùng giá trị mặc định
+                Log.e("Admin", e.localizedMessage ?: "Unknown")
             }
         }
     }
@@ -80,12 +81,19 @@ class AdminSettingsFragment : Fragment() {
             try {
                 val res = api.updateSetting(SystemSetting(key, value))
                 if (res.isSuccessful) {
-                    Toast.makeText(context, R.string.admin_settings_save_success, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context, R.string.admin_settings_save_success, Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Toast.makeText(context, getString(R.string.admin_video_status, res.message()), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        getString(R.string.admin_video_status, res.message()),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, getString(R.string.error_connection, e.localizedMessage), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_connection, Toast.LENGTH_SHORT).show()
+                Log.e("Admin", e.localizedMessage ?: "Unknown")
             }
         }
     }
@@ -103,15 +111,19 @@ class AdminSettingsFragment : Fragment() {
                     binding.edtGrantAmount.text?.clear()
                 } else {
                     // Demo mode: Báo thành công giả
-                    val successMsg = getString(R.string.demo_prefix) + getString(R.string.admin_grant_success, amount, email)
+                    val successMsg = getString(R.string.demo_prefix) + getString(
+                        R.string.admin_grant_success, amount, email
+                    )
                     Toast.makeText(context, successMsg, Toast.LENGTH_LONG).show()
                     binding.edtGrantEmail.text?.clear()
                     binding.edtGrantAmount.text?.clear()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, R.string.admin_grant_credits_success, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, R.string.admin_grant_credits_success, Toast.LENGTH_LONG)
+                    .show()
                 binding.edtGrantEmail.text?.clear()
                 binding.edtGrantAmount.text?.clear()
+                Log.e("Admin", e.localizedMessage ?: "Unknown")
             } finally {
                 binding.btnGrantCredits.isEnabled = true
             }

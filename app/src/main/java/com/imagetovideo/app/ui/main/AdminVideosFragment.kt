@@ -1,6 +1,7 @@
 package com.imagetovideo.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -115,6 +116,7 @@ class AdminVideosFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 Toast.makeText(context, R.string.msg_video_delete_error, Toast.LENGTH_SHORT).show()
+                Log.e("Admin", e.localizedMessage ?: "Unknown")
             }
         }
     }

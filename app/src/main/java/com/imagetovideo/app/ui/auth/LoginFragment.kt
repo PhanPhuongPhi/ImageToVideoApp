@@ -2,12 +2,14 @@ package com.imagetovideo.app.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+
 import androidx.navigation.fragment.findNavController
 import com.imagetovideo.app.R
 import com.imagetovideo.app.data.api.RetrofitClient
@@ -23,8 +25,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
@@ -76,8 +77,9 @@ class LoginFragment : Fragment() {
                     val errorMsg = res.errorBody()?.string() ?: getString(R.string.login_failed)
                     Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: Exception) {
-                Toast.makeText(context, getString(R.string.error_connection, e.localizedMessage), Toast.LENGTH_SHORT).show()
+            } catch (error: Exception) {
+                Toast.makeText(context, R.string.error_connection, Toast.LENGTH_SHORT).show()
+                Log.e("Auth", error.localizedMessage ?: "Unknown")
             }
         }
     }

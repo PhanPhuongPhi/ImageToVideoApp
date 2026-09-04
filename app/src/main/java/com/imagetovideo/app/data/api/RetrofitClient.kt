@@ -1,6 +1,7 @@
 package com.imagetovideo.app.data.api
 
 import android.content.Context
+import com.imagetovideo.app.BuildConfig
 import com.imagetovideo.app.utils.TokenManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -13,16 +14,18 @@ object RetrofitClient {
     // URL từ Ngrok Kaggle
     // private const val BASE_URL = "https://defection-rimless-bobble.ngrok-free.dev/"
 
-    private const val BASE_URL = "http://10.0.2.2:8000/"
+    // Edit in local.properties instead
+    // Invalidate cache if failed to import BuildConfig
+    private const val BASE_URL = BuildConfig.BASE_URL
     
-    fun getBaseUrl(): String = BASE_URL
+//    fun getBaseUrl(): String = BASE_URL
 
     fun getApiService(context: Context): ApiService {
         val tokenManager = TokenManager(context)
 
         val authInterceptor = Interceptor { chain ->
             val originalRequest = chain.request()
-            val token = tokenManager.getToken()
+            val token = tokenManager.getTokenSync()
             val builder = originalRequest.newBuilder()
 
             if (!token.isNullOrEmpty()) {

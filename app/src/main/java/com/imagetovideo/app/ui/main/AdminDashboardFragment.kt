@@ -1,9 +1,11 @@
 package com.imagetovideo.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.github.mikephil.charting.data.PieData
@@ -13,7 +15,6 @@ import com.imagetovideo.app.R
 import com.imagetovideo.app.data.api.RetrofitClient
 import com.imagetovideo.app.databinding.FragmentAdminDashboardBinding
 import kotlinx.coroutines.launch
-import androidx.core.graphics.toColorInt
 
 class AdminDashboardFragment : Fragment() {
 
@@ -40,11 +41,19 @@ class AdminDashboardFragment : Fragment() {
                 val res = api.getAdminStats()
                 if (res.isSuccessful && res.body() != null) {
                     val stats = res.body()!!
-                    updateUI(stats.totalUsers, stats.newUsersToday, stats.totalVideosSuccess, stats.totalVideosFailed, stats.totalRevenue, stats.activePromotionsCount)
+                    updateUI(
+                        stats.totalUsers,
+                        stats.newUsersToday,
+                        stats.totalVideosSuccess,
+                        stats.totalVideosFailed,
+                        stats.totalRevenue,
+                        stats.activePromotionsCount
+                    )
                 } else {
                     showMockStats()
                 }
             } catch (e: Exception) {
+                Log.e("Admin", e.localizedMessage ?: "Unknown")
                 showMockStats()
             }
         }
@@ -54,7 +63,14 @@ class AdminDashboardFragment : Fragment() {
         updateUI(150, 12, 1240, 5, 2500000.0, 3)
     }
 
-    private fun updateUI(users: Int, newUsers: Int, videoOk: Int, videoFail: Int, rev: Double, promos: Int) {
+    private fun updateUI(
+        users: Int,
+        newUsers: Int,
+        videoOk: Int,
+        videoFail: Int,
+        rev: Double,
+        promos: Int
+    ) {
         binding.txtStatTotalUsers.text = users.toString()
         binding.txtStatNewUsers.text = newUsers.toString()
         binding.txtStatVideosSuccess.text = videoOk.toString()

@@ -1,42 +1,57 @@
 package com.imagetovideo.app.utils
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 
-class TokenManager(context: Context) {
-    private val prefs: SharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_prefs")
+
+class TokenManager(private val context: Context) {
 
     companion object {
-        private const val KEY_TOKEN = "jwt_token"
-        private const val KEY_USER_EMAIL = "user_email"
-        private const val KEY_USER_ROLE = "user_role"
+        private val KEY_TOKEN = stringPreferencesKey("jwt_token")
+        private val KEY_USER_EMAIL = stringPreferencesKey("user_email")
+        private val KEY_USER_ROLE = stringPreferencesKey("user_role")
     }
 
-    fun saveToken(token: String) {
-        prefs.edit().putString(KEY_TOKEN, token).apply()
+    suspend fun saveToken(token: String) {
+        context.dataStore.edit { it[KEY_TOKEN] = token }
     }
 
-    fun getToken(): String? {
-        return prefs.getString(KEY_TOKEN, null)
+    fun getToken(): Flow<String?> = context.dataStore.data.map { it[KEY_TOKEN] }
+
+    fun getTokenSync(): String? = runBlocking {
+        getToken().first()
     }
 
-    fun saveUserEmail(email: String) {
-        prefs.edit().putString(KEY_USER_EMAIL, email).apply()
+    suspend fun saveUserEmail(email: String) {
+        context.dataStore.edit { it[KEY_USER_EMAIL] = email }
     }
 
-    fun getUserEmail(): String? {
-        return prefs.getString(KEY_USER_EMAIL, "")
+    fun getUserEmail(): Flow<String?> = context.dataStore.data.map { it[KEY_USER_EMAIL] ?: "" }
+
+    fun getUserEmailSync(): String? = runBlocking {
+        getUserEmail().first()
     }
 
-    fun saveUserRole(role: String) {
-        prefs.edit().putString(KEY_USER_ROLE, role).apply()
+    suspend fun saveUserRole(role: String) {
+        context.dataStore.edit { it[KEY_USER_ROLE] = role }
     }
 
-    fun getUserRole(): String {
-        return prefs.getString(KEY_USER_ROLE, "guest") ?: "guest"
+    fun getUserRole(): Flow<String> = context.dataStore.data.map { it[KEY_USER_ROLE] ?: "guest" }
+
+    fun getUserRoleSync(): String = runBlocking {
+        getUserRole().first()
     }
 
-    fun clear() {
-        prefs.edit().clear().apply()
+    suspend fun clear() {
+        context.dataStore.edit { it.clear() }
     }
 }

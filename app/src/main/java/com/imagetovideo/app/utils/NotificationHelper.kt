@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.imagetovideo.app.R
@@ -17,15 +18,13 @@ object NotificationHelper {
     private const val CHANNEL_DESC = "Notifications for AI video generation status"
 
     fun createNotificationChannel(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
-                description = CHANNEL_DESC
-            }
-            val notificationManager: NotificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance).apply {
+            description = CHANNEL_DESC
         }
+        val notificationManager: NotificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
     fun showVideoCompletedNotification(context: Context, prompt: String) {
@@ -34,7 +33,7 @@ object NotificationHelper {
             putExtra("navigate_to", "creations")
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(
-            context, 0, intent, 
+            context, 0, intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
@@ -51,6 +50,7 @@ object NotificationHelper {
                 notify(System.currentTimeMillis().toInt(), builder.build())
             } catch (e: SecurityException) {
                 // Handle missing permission
+                Log.e("Notification", e.localizedMessage ?: "Unknown")
             }
         }
     }

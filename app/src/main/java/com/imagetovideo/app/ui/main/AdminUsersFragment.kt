@@ -1,6 +1,7 @@
 package com.imagetovideo.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,7 @@ class AdminUsersFragment : Fragment() {
                     showMockUsers()
                 }
             } catch (e: Exception) {
+                Log.e("Admin", e.localizedMessage ?: "Unknown")
                 showMockUsers()
             }
         }
@@ -59,10 +61,34 @@ class AdminUsersFragment : Fragment() {
 
     private fun showMockUsers() {
         val mockData = listOf(
-            UserProfile(id = "1", email = "admin@gmail.com", fullName = "Hệ thống Admin", role = "admin", creditBalance = 999),
-            UserProfile(id = "2", email = "khachhang@gmail.com", fullName = "Nguyễn Văn Khách", role = "guest", creditBalance = 10),
-            UserProfile(id = "3", email = "user_test@gmail.com", fullName = "Người dùng thử", role = "guest", creditBalance = 0),
-            UserProfile(id = "4", email = "123", fullName = "Tài khoản 123", role = "guest", creditBalance = 5)
+            UserProfile(
+                id = "1",
+                email = "admin@gmail.com",
+                fullName = "Hệ thống Admin",
+                role = "admin",
+                creditBalance = 999
+            ),
+            UserProfile(
+                id = "2",
+                email = "khachhang@gmail.com",
+                fullName = "Nguyễn Văn Khách",
+                role = "guest",
+                creditBalance = 10
+            ),
+            UserProfile(
+                id = "3",
+                email = "user_test@gmail.com",
+                fullName = "Người dùng thử",
+                role = "guest",
+                creditBalance = 0
+            ),
+            UserProfile(
+                id = "4",
+                email = "123",
+                fullName = "Tài khoản 123",
+                role = "guest",
+                creditBalance = 5
+            )
         )
         adapter.updateData(mockData)
     }
@@ -73,15 +99,21 @@ class AdminUsersFragment : Fragment() {
             try {
                 val res = api.updateUserStatus(userId, mapOf("is_locked" to isLocked))
                 if (res.isSuccessful) {
-                    val msg = if (isLocked) getString(R.string.admin_user_locked_msg) else getString(R.string.admin_user_unlocked_msg)
+                    val msg =
+                        if (isLocked) getString(R.string.admin_user_locked_msg) else getString(R.string.admin_user_unlocked_msg)
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                 } else {
-                    val msg = if (isLocked) getString(R.string.demo_prefix) + getString(R.string.admin_user_locked_msg) else getString(R.string.demo_prefix) + getString(R.string.admin_user_unlocked_msg)
+                    val msg =
+                        if (isLocked) getString(R.string.demo_prefix) + getString(R.string.admin_user_locked_msg) else getString(
+                            R.string.demo_prefix
+                        ) + getString(R.string.admin_user_unlocked_msg)
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                val msg = if (isLocked) getString(R.string.admin_user_lock) else getString(R.string.admin_user_unlock)
+                val msg =
+                    if (isLocked) getString(R.string.admin_user_lock) else getString(R.string.admin_user_unlock)
                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                Log.e("Admin", e.localizedMessage ?: "Unknown")
             }
         }
     }

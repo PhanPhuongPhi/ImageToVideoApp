@@ -1,6 +1,7 @@
 package com.imagetovideo.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -124,10 +125,9 @@ class AdminPromotionsFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 Toast.makeText(
-                    context,
-                    getString(R.string.error_connection, e.localizedMessage),
-                    Toast.LENGTH_SHORT
+                    context, R.string.error_connection, Toast.LENGTH_SHORT
                 ).show()
+                Log.e("Promotion", e.localizedMessage ?: "Unknown")
             }
         }
     }
@@ -142,7 +142,9 @@ class AdminPromotionsFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 Toast.makeText(
-                    context, getString(R.string.error_load_promotions, e.localizedMessage), Toast.LENGTH_SHORT
+                    context,
+                    getString(R.string.error_load_promotions, e.localizedMessage),
+                    Toast.LENGTH_SHORT
                 ).show()
             }
         }

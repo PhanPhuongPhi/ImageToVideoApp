@@ -19,7 +19,7 @@
     <string name="studio_btn_save">Lưu vào bộ sưu tập App</string>
     <string name="studio_save_success">Đã lưu video vào App thành công!</string>
     <string name="studio_save_error">Lỗi khi lưu video!</string>
-    <string name="studio_save_error_detail">Lỗi khi lưu video: %1$s</string>
+    <string name="studio_save_error_detail">Lỗi khi lưu video!</string>
     <string name="studio_success_msg">Chúc mừng! Video AI của bạn đã được tạo thành công.</string>
     <string name="studio_btn_download">Tải về máy</string>
     <string name="studio_btn_share">Chia sẻ video</string>
@@ -31,7 +31,7 @@
     <string name="studio_auto_save_success">Video đã được tự động lưu vào App!</string>
     <string name="studio_download_failed">Tải video thất bại</string>
     <string name="studio_download_started">Đã bắt đầu tải video về máy!</string>
-    <string name="studio_download_error_prefix">Lỗi tải về: %1$s</string>
+    <string name="studio_download_error_prefix">Lỗi tải về!</string>
     <string name="studio_init_failed">Không thể khởi tạo tiến trình tạo video!</string>
     <string name="studio_notification_denied">Thông báo bị từ chối. Bạn sẽ không nhận được tin nhắn khi video hoàn thành.</string>
     <string name="creations_title">Bộ Sưu Tập Video</string>
@@ -68,12 +68,12 @@
 
     <!-- Errors -->
     <string name="error_fill_all_fields">Vui lòng nhập đủ thông tin</string>
-    <string name="error_connection">Lỗi kết nối: %1$s</string>
+    <string name="error_connection">Lỗi kết nối!</string>
     <string name="error_connection_general">Lỗi kết nối!</string>
     <string name="error_otp_invalid">Mã OTP gồm 6 chữ số</string>
     <string name="error_otp_wrong">Mã OTP không đúng!</string>
     <string name="error_register_fill_all">Vui lòng nhập đầy đủ họ tên, email và mật khẩu</string>
-    <string name="error_load_profile">Lỗi tải thông tin cá nhân!</string>
+    <string name="error_load_profile">Lỗi tải thông tin cá nhân! %1$s</string>
     <string name="error_logout_success">Đã đăng xuất!</string>
     <string name="error_update_profile_empty">Vui lòng nhập thông tin cần thay đổi!</string>
     <string name="error_update_profile_success">Cập nhật hồ sơ thành công!</string>
@@ -141,7 +141,7 @@
     <string name="dialog_delete_video_title">Xóa Video</string>
     <string name="dialog_delete_video_msg">Bạn có chắc chắn muốn xóa video này không?</string>
     <string name="msg_video_deleted">Đã xóa video</string>
-    <string name="msg_video_delete_error">Lỗi khi xóa %1$s</string>
+    <string name="msg_video_delete_error">Lỗi khi xóa</string>
 
     <!-- Credit History & Packages -->
     <string name="credit_history_title">Lịch sử giao dịch</string>
@@ -194,4 +194,5 @@
     <string name="studio_prompt_empty_error">Prompt trống, vui lòng thử lại</string>
     <string name="error_load_video">Lỗi tải danh sách video: %1$s</string>
     <string name="credit_error_purchase">Thanh toán thất bại!</string>
+    <string name="name_hint">Tên</string>
 </resources>

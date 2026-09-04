@@ -2,6 +2,7 @@ package com.imagetovideo.app.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,7 +66,9 @@ class OtpFragment : Fragment() {
                     Toast.makeText(context, R.string.error_otp_wrong, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, R.string.error_connection_general, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_connection_general, Toast.LENGTH_SHORT)
+                    .show()
+                Log.e("Network", e.localizedMessage ?: "Unknown")
             }
         }
     }

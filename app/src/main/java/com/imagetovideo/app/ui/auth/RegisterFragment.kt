@@ -1,6 +1,7 @@
 package com.imagetovideo.app.ui.auth
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,12 +57,17 @@ class RegisterFragment : Fragment() {
                 val res = api.register(RegisterRequest(email, password, name))
                 if (res.isSuccessful) {
                     val bundle = Bundle().apply { putString("email", email) }
-                    findNavController().navigate(R.id.action_registerFragment_to_otpFragment, bundle)
+                    findNavController().navigate(
+                        R.id.action_registerFragment_to_otpFragment,
+                        bundle
+                    )
                 } else {
                     Toast.makeText(context, R.string.register_failed, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, R.string.error_connection_general, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_connection_general, Toast.LENGTH_SHORT)
+                    .show()
+                Log.e("Network", e.localizedMessage ?: "Unknown")
             }
         }
     }
