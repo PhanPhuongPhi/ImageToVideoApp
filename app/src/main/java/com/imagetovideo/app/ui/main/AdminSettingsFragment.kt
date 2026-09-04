@@ -80,12 +80,12 @@ class AdminSettingsFragment : Fragment() {
             try {
                 val res = api.updateSetting(SystemSetting(key, value))
                 if (res.isSuccessful) {
-                    Toast.makeText(context, "Đã cập nhật cấu hình hệ thống!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.admin_settings_save_success, Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "Lỗi: ${res.message()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.admin_video_status, res.message()), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi kết nối: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.error_connection, e.localizedMessage), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -103,13 +103,13 @@ class AdminSettingsFragment : Fragment() {
                     binding.edtGrantAmount.text?.clear()
                 } else {
                     // Demo mode: Báo thành công giả
-                    val successMsg = "[Demo] " + getString(R.string.admin_grant_success, amount, email)
+                    val successMsg = getString(R.string.demo_prefix) + getString(R.string.admin_grant_success, amount, email)
                     Toast.makeText(context, successMsg, Toast.LENGTH_LONG).show()
                     binding.edtGrantEmail.text?.clear()
                     binding.edtGrantAmount.text?.clear()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Cấp Credit thành công!", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, R.string.admin_grant_credits_success, Toast.LENGTH_LONG).show()
                 binding.edtGrantEmail.text?.clear()
                 binding.edtGrantAmount.text?.clear()
             } finally {

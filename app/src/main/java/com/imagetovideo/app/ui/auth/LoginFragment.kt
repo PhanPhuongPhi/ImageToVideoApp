@@ -38,7 +38,7 @@ class LoginFragment : Fragment() {
             val password = binding.edtPassword.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(context, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -67,17 +67,17 @@ class LoginFragment : Fragment() {
                     if (profileRes.isSuccessful && profileRes.body() != null) {
                         val userProfile = profileRes.body()!!
                         tokenManager.saveUserRole(userProfile.role)
-                        Toast.makeText(context, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show()
                     }
 
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     requireActivity().finish()
                 } else {
-                    val errorMsg = res.errorBody()?.string() ?: "Đăng nhập thất bại!"
+                    val errorMsg = res.errorBody()?.string() ?: getString(R.string.login_failed)
                     Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi kết nối: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.error_connection, e.localizedMessage), Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 val api = RetrofitClient.getApiService(this@MainActivity)
                 val res = api.getCredits()
                 if (res.isSuccessful && res.body() != null) {
-                    val balance = res.body()?.get("credit_balance")?.toString() ?: "0"
+                    val balance = res.body()!!.creditBalance.toString()
                     binding.txtCreditBalance.text = getString(R.string.credits_balance, balance)
                 }
             } catch (_: Exception) {}

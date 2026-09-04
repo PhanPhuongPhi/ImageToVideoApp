@@ -2,7 +2,11 @@ package com.imagetovideo.app.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.imagetovideo.app.ui.main.*
+import com.imagetovideo.app.ui.main.AdminDashboardFragment
+import com.imagetovideo.app.ui.main.AdminPromotionsFragment
+import com.imagetovideo.app.ui.main.AdminSettingsFragment
+import com.imagetovideo.app.ui.main.AdminUsersFragment
+import com.imagetovideo.app.ui.main.AdminVideosFragment
 
 class AdminPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 5

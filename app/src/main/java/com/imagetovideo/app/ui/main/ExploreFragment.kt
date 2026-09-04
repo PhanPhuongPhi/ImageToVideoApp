@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.imagetovideo.app.R
 import com.imagetovideo.app.data.api.RetrofitClient
 import com.imagetovideo.app.databinding.FragmentExploreBinding
 import com.imagetovideo.app.ui.adapter.VideoAdapter
@@ -30,7 +31,7 @@ class ExploreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = VideoAdapter { video ->
-            Toast.makeText(context, "Xem mẫu: ${video.prompt}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.explore_view_sample, video.prompt), Toast.LENGTH_SHORT).show()
         }
         binding.rvExplore.adapter = adapter
 
@@ -52,7 +53,7 @@ class ExploreFragment : Fragment() {
                     adapter.submitList(res.body()!!.items)
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi tải cộng đồng!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.explore_load_error, Toast.LENGTH_SHORT).show()
             } finally {
                 binding.swipeRefreshExplore.isRefreshing = false
             }

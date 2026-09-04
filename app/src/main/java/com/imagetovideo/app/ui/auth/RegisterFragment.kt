@@ -36,7 +36,7 @@ class RegisterFragment : Fragment() {
             val password = binding.edtRegisterPassword.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
-                Toast.makeText(context, "Vui lòng nhập đầy đủ họ tên, email và mật khẩu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_register_fill_all, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -58,10 +58,10 @@ class RegisterFragment : Fragment() {
                     val bundle = Bundle().apply { putString("email", email) }
                     findNavController().navigate(R.id.action_registerFragment_to_otpFragment, bundle)
                 } else {
-                    Toast.makeText(context, "Đăng ký thất bại!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.register_failed, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi kết nối!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_connection_general, Toast.LENGTH_SHORT).show()
             }
         }
     }

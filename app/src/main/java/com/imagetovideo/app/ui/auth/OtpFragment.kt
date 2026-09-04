@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.imagetovideo.app.R
 import com.imagetovideo.app.data.api.RetrofitClient
 import com.imagetovideo.app.data.model.OtpVerifyRequest
 import com.imagetovideo.app.databinding.FragmentOtpBinding
@@ -40,7 +41,7 @@ class OtpFragment : Fragment() {
         binding.btnVerifyOtp.setOnClickListener {
             val otp = binding.edtOtpCode.text.toString().trim()
             if (otp.length != 6) {
-                Toast.makeText(context, "Mã OTP gồm 6 chữ số", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_otp_invalid, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             verifyOtp(otp)
@@ -61,10 +62,10 @@ class OtpFragment : Fragment() {
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     requireActivity().finish()
                 } else {
-                    Toast.makeText(context, "Mã OTP không đúng!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.error_otp_wrong, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi kết nối!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_connection_general, Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -23,6 +23,10 @@ data class OtpVerifyRequest(
     val otp: String
 )
 
+data class CreditResponse(
+    @SerializedName("credit_balance") val creditBalance: Int
+)
+
 data class UserProfile(
     val id: String,
     val email: String,

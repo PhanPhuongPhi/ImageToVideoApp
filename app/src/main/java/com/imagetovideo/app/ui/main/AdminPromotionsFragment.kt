@@ -8,17 +8,18 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.imagetovideo.app.R
 import com.imagetovideo.app.data.api.RetrofitClient
 import com.imagetovideo.app.data.model.Promotion
 import com.imagetovideo.app.databinding.DialogCreatePromotionBinding
 import com.imagetovideo.app.databinding.FragmentAdminPromotionsBinding
 import com.imagetovideo.app.ui.adapter.AdminPromotionAdapter
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class AdminPromotionsFragment : Fragment() {
 
@@ -26,13 +27,12 @@ class AdminPromotionsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: AdminPromotionAdapter
     private val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    
+
     private var startDateStr: String? = null
     private var endDateStr: String? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAdminPromotionsBinding.inflate(inflater, container, false)
         return binding.root
@@ -54,15 +54,13 @@ class AdminPromotionsFragment : Fragment() {
 
     private fun showCreatePromotionDialog() {
         val dialogBinding = DialogCreatePromotionBinding.inflate(layoutInflater)
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setView(dialogBinding.root)
-            .create()
+        val dialog =
+            MaterialAlertDialogBuilder(requireContext()).setView(dialogBinding.root).create()
 
         dialogBinding.btnStartDate.setOnClickListener {
-            val datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Chọn ngày bắt đầu")
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                .build()
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker().setTitleText(R.string.picker_start_date)
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
 
             datePicker.addOnPositiveButtonClickListener { selection ->
                 startDateStr = dateFormatter.format(Date(selection))
@@ -72,10 +70,9 @@ class AdminPromotionsFragment : Fragment() {
         }
 
         dialogBinding.btnEndDate.setOnClickListener {
-            val datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Chọn ngày kết thúc")
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                .build()
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker().setTitleText(R.string.picker_end_date)
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
 
             datePicker.addOnPositiveButtonClickListener { selection ->
                 endDateStr = dateFormatter.format(Date(selection))
@@ -89,7 +86,7 @@ class AdminPromotionsFragment : Fragment() {
             val rewardStr = dialogBinding.edtPromoReward.text.toString().trim()
 
             if (name.isEmpty() || rewardStr.isEmpty() || startDateStr == null || endDateStr == null) {
-                Toast.makeText(context, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -119,10 +116,18 @@ class AdminPromotionsFragment : Fragment() {
                     dialog.dismiss()
                     loadPromotions() // Reload list
                 } else {
-                    Toast.makeText(context, "Lỗi: ${res.message()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        getString(R.string.error_generic, res.message()),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi kết nối: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    getString(R.string.error_connection, e.localizedMessage),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -136,7 +141,9 @@ class AdminPromotionsFragment : Fragment() {
                     adapter.updateData(res.body()!!)
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi tải khuyến mãi: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context, getString(R.string.error_load_promotions, e.localizedMessage), Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

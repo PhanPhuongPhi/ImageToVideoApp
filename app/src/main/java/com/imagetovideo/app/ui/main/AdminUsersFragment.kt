@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.imagetovideo.app.R
 import com.imagetovideo.app.data.api.RetrofitClient
 import com.imagetovideo.app.data.model.UserProfile
 import com.imagetovideo.app.databinding.FragmentAdminUsersBinding
@@ -72,14 +73,14 @@ class AdminUsersFragment : Fragment() {
             try {
                 val res = api.updateUserStatus(userId, mapOf("is_locked" to isLocked))
                 if (res.isSuccessful) {
-                    val msg = if (isLocked) "Đã khóa tài khoản" else "Đã mở khóa tài khoản"
+                    val msg = if (isLocked) getString(R.string.admin_user_locked_msg) else getString(R.string.admin_user_unlocked_msg)
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                 } else {
-                    val msg = if (isLocked) "[Demo] Đã khóa tài khoản" else "[Demo] Đã mở khóa tài khoản"
+                    val msg = if (isLocked) getString(R.string.demo_prefix) + getString(R.string.admin_user_locked_msg) else getString(R.string.demo_prefix) + getString(R.string.admin_user_unlocked_msg)
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                val msg = if (isLocked) "Đã khóa" else "Đã mở khóa"
+                val msg = if (isLocked) getString(R.string.admin_user_lock) else getString(R.string.admin_user_unlock)
                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
             }
         }

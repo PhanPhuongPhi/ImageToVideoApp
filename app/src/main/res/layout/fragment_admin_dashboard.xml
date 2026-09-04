@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dashboard Statistics"
+            android:text="@string/admin_dashboard_title"
             android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -49,7 +49,7 @@
                             android:id="@+id/txtStatTotalUsers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/credits_default"
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -75,7 +75,7 @@
                             android:id="@+id/txtStatNewUsers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/credits_default"
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -107,7 +107,7 @@
                             android:id="@+id/txtStatVideosSuccess"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/credits_default"
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -133,7 +133,7 @@
                             android:id="@+id/txtStatVideosFailed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/credits_default"
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -165,7 +165,7 @@
                             android:id="@+id/txtStatRevenue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/credits_default"
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -191,7 +191,7 @@
                             android:id="@+id/txtStatPromotions"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/credits_default"
                             android:textSize="20sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -203,7 +203,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Video Success Rate"
+            android:text="@string/admin_chart_video_title"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold" />

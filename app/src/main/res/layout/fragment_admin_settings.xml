@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="System Configuration"
+            android:text="@string/admin_settings_title"
             android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -100,7 +100,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Video Generation Cost (Credits)"
+                    android:text="@string/admin_settings_cost_label"
                     android:textSize="14sp" />
                 <com.google.android.material.slider.Slider
                     android:id="@+id/sliderVideoCost"
@@ -116,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Lưu cấu hình hệ thống"
+                    android:text="@string/admin_settings_btn_save"
                     style="@style/Widget.Material3.Button.TonalButton" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

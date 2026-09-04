@@ -19,7 +19,7 @@
             android:id="@+id/packageName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Starter Pack"
+            android:text="@string/placeholder_package_title"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="50 Credits"
+            android:text="@string/placeholder_package_value"
             android:textColor="@android:color/holo_blue_dark"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="10.000 VND"
+            android:text="@string/placeholder_package_cost"
             android:textSize="16sp" />
 
         <Button

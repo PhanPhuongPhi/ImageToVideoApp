@@ -32,7 +32,7 @@
                 android:id="@+id/txtReason"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reason"
+                android:text="@string/placeholder_reason"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -41,15 +41,26 @@
                 android:id="@+id/txtDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date"
+                android:text="@string/placeholder_date"
                 android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtPrompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/placeholder_prompt"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="13sp"
+                android:textStyle="italic"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/txtAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+50"
+            android:text="@string/credits_default"
             android:textColor="@android:color/holo_green_dark"
             android:textSize="18sp"
             android:textStyle="bold" />

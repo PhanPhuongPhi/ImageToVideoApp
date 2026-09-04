@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, status, UploadFile, File, Form, Header
 from sqlalchemy.orm import Session
-import models, database, hashlib, uuid
+import models, database, hashlib, uuid, random
 import datetime
 import requests
 from typing import List, Optional, Dict
@@ -48,6 +48,16 @@ class SystemSettingRequest(BaseModel):
     key: str
     value: str
     description: Optional[str] = None
+
+class UpdateProfileRequest(BaseModel):
+    name: Optional[str] = None
+    password: Optional[str] = None
+
+class PromotionCreateRequest(BaseModel):
+    name: str
+    reward_credits: int
+    start_date: str
+    end_date: str
 
 # --- Helper xác thực ---
 def get_current_user(authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
@@ -102,6 +112,13 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
         role="guest",
         credit_balance=initial_credits
     )
+
+    # Generate 6-digit OTP
+    otp_code = str(random.randint(100000, 999999))
+    new_user.otp = otp_code
+    new_user.otp_expiry = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
+    print(f"[OTP Debug] Email: {request.email}, Code: {otp_code}")
+
     db.add(new_user)
     db.commit()
     
@@ -139,8 +156,25 @@ def verify_otp(request: OtpVerifyRequest, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    # Mock OTP check: chấp nhận bất kỳ mã 6 số nào cho demo
-    if len(request.otp) == 6:
+    # Check if OTP exists
+    if not user.otp:
+        raise HTTPException(status_code=400, detail="Mã OTP không hợp lệ hoặc đã được sử dụng")
+
+    # Check expiration
+    if user.otp_expiry < datetime.datetime.utcnow():
+        # Clear expired OTP
+        user.otp = None
+        user.otp_expiry = None
+        db.commit()
+        raise HTTPException(status_code=400, detail="Mã OTP đã hết hạn")
+
+    # Verify matching
+    if request.otp == user.otp:
+        # Clear OTP after successful verification
+        user.otp = None
+        user.otp_expiry = None
+        db.commit()
+
         return {
             "access_token": f"mock_token_{user.id}",
             "token_type": "bearer"
@@ -158,9 +192,57 @@ def get_me(current_user: models.User = Depends(get_current_user)):
         "credit_balance": current_user.credit_balance
     }
 
+@app.patch("/auth/me")
+def update_me(request: UpdateProfileRequest, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    if request.name:
+        current_user.full_name = request.name
+    if request.password:
+        current_user.hashed_password = get_password_hash(request.password)
+
+    db.commit()
+    db.refresh(current_user)
+    return {
+        "id": str(current_user.id),
+        "email": current_user.email,
+        "full_name": current_user.full_name,
+        "role": current_user.role,
+        "credit_balance": current_user.credit_balance
+    }
+
 @app.get("/users/credits")
 def get_credits(current_user: models.User = Depends(get_current_user)):
     return {"credit_balance": current_user.credit_balance}
+
+@app.get("/credits/history")
+def get_credit_history(
+    page: int = 1,
+    limit: int = 20,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    skip = (page - 1) * limit
+    query = db.query(models.CreditTransaction).filter(models.CreditTransaction.user_id == current_user.id)
+    total = query.count()
+    transactions = query.order_by(models.CreditTransaction.created_at.desc()).offset(skip).limit(limit).all()
+
+    items = []
+    for tx in transactions:
+        items.append({
+            "id": tx.id,
+            "amount": tx.amount,
+            "transaction_type": tx.transaction_type,
+            "reason": tx.reason,
+            "prompt": tx.video.prompt if tx.video else None,
+            "created_at": tx.created_at.isoformat(),
+            "video_id": tx.video_id
+        })
+
+    return {
+        "items": items,
+        "total": total,
+        "page": page,
+        "limit": limit
+    }
 
 @app.get("/credits/packages")
 def get_packages(db: Session = Depends(get_db)):
@@ -185,6 +267,15 @@ def purchase(package_id: str, db: Session = Depends(get_db), current_user: model
     db.commit()
     return {"message": "Purchase successful", "new_balance": current_user.credit_balance}
 
+@app.get("/promotions/active")
+def get_active_promotions(db: Session = Depends(get_db)):
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    return db.query(models.Promotion).filter(
+        models.Promotion.is_active == True,
+        models.Promotion.start_date <= today,
+        models.Promotion.end_date >= today
+    ).all()
+
 @app.post("/generate-video")
 async def generate_video(
     image: UploadFile = File(...), 
@@ -205,12 +296,14 @@ async def generate_video(
     
     # 3. Trừ Credit ngay lập tức (Tạm giữ)
     current_user.credit_balance -= cost
-    db.add(models.CreditTransaction(
+    tx_log = models.CreditTransaction(
         user_id=current_user.id,
+        video_id=job_id,
         amount=cost,
         transaction_type="MINUS",
         reason=f"Tạo video AI ({ratio}, Job ID: {job_id})"
-    ))
+    )
+    db.add(tx_log)
     db.commit()
     
     if USE_REMOTE_AI:
@@ -225,6 +318,11 @@ async def generate_video(
             # Ưu tiên lấy task_id từ Kaggle để đồng bộ
             remote_job_id = result.get("task_id") or result.get("job_id") or job_id
             
+            # Nếu ID thay đổi, cập nhật transaction để link đúng video
+            if remote_job_id != job_id:
+                tx_log.video_id = remote_job_id
+                tx_log.reason = tx_log.reason.replace(job_id, remote_job_id)
+
             # Lưu video vào DB của User với ID chuẩn từ Remote
             new_video = models.Video(
                 id=remote_job_id,
@@ -241,6 +339,7 @@ async def generate_video(
             current_user.credit_balance += cost
             db.add(models.CreditTransaction(
                 user_id=current_user.id,
+                video_id=job_id,
                 amount=cost,
                 transaction_type="PLUS",
                 reason=f"Hoàn Credit do lỗi AI Server (Job ID: {job_id})"
@@ -290,6 +389,7 @@ def get_status(job_id: str, db: Session = Depends(get_db)):
                     user.credit_balance += cost
                     db.add(models.CreditTransaction(
                         user_id=user.id,
+                        video_id=job_id,
                         amount=cost,
                         transaction_type="PLUS",
                         reason=f"Hoàn Credit do tạo video thất bại (Job ID: {job_id})"
@@ -363,6 +463,23 @@ def get_stats(db: Session = Depends(get_db), current_user: models.User = Depends
         "total_revenue": total_revenue,
         "active_promotions_count": db.query(models.Promotion).filter(models.Promotion.is_active == True).count()
     }
+
+@app.post("/admin/promotions")
+def create_promotion(request: PromotionCreateRequest, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Permission denied")
+
+    new_promo = models.Promotion(
+        name=request.name,
+        reward_credits=request.reward_credits,
+        start_date=request.start_date,
+        end_date=request.end_date,
+        is_active=True
+    )
+    db.add(new_promo)
+    db.commit()
+    db.refresh(new_promo)
+    return new_promo
 
 @app.get("/admin/users")
 def get_all_users(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):

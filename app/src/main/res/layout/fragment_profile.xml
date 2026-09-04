@@ -34,7 +34,7 @@
                 android:id="@+id/txtProfileEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="user@example.com"
+                android:text="@string/placeholder_email"
                 android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Role: User"
+                android:text="@string/admin_tab_users"
                 android:textColor="@color/text_secondary"
                 android:textSize="13sp" />
 
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:text="Chỉnh sửa"
+                android:text="@string/btn_edit"
                 android:textSize="12sp"
                 app:icon="@android:drawable/ic_menu_edit"
                 app:iconSize="16dp" />

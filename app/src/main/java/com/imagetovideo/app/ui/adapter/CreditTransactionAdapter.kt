@@ -1,5 +1,6 @@
 package com.imagetovideo.app.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -17,17 +18,25 @@ class CreditTransactionAdapter(private var items: List<CreditTransaction>) :
         return ViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.binding.txtReason.text = item.reason
         holder.binding.txtDate.text = item.createdAt
         
+        if (!item.prompt.isNullOrEmpty()) {
+            holder.binding.txtPrompt.visibility = android.view.View.VISIBLE
+            holder.binding.txtPrompt.text = holder.itemView.context.getString(com.imagetovideo.app.R.string.transaction_prompt_label, item.prompt)
+        } else {
+            holder.binding.txtPrompt.visibility = android.view.View.GONE
+        }
+
         if (item.type == "PLUS") {
-            holder.binding.txtAmount.text = "+${item.amount}"
+            holder.binding.txtAmount.text = holder.itemView.context.getString(com.imagetovideo.app.R.string.amount_plus, item.amount)
             holder.binding.txtAmount.setTextColor(ContextCompat.getColor(holder.itemView.context, android.R.color.holo_green_dark))
             holder.binding.imgType.setImageResource(android.R.drawable.ic_input_add)
         } else {
-            holder.binding.txtAmount.text = "-${item.amount}"
+            holder.binding.txtAmount.text = holder.itemView.context.getString(com.imagetovideo.app.R.string.amount_minus, item.amount)
             holder.binding.txtAmount.setTextColor(ContextCompat.getColor(holder.itemView.context, android.R.color.holo_red_dark))
             holder.binding.imgType.setImageResource(android.R.drawable.ic_delete)
         }

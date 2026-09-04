@@ -40,8 +40,8 @@ object NotificationHelper {
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_sparkles)
-            .setContentTitle("Video AI đã tạo xong!")
-            .setContentText("Video của bạn: \"$prompt\" đã sẵn sàng.")
+            .setContentTitle(context.getString(R.string.notification_title))
+            .setContentText(context.getString(R.string.notification_text, prompt))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

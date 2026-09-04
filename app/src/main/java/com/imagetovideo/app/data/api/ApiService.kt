@@ -1,10 +1,33 @@
 package com.imagetovideo.app.data.api
 
-import com.imagetovideo.app.data.model.*
+import com.imagetovideo.app.data.model.AdminDashboardStats
+import com.imagetovideo.app.data.model.AdminVideoItem
+import com.imagetovideo.app.data.model.CreditPackagesResponse
+import com.imagetovideo.app.data.model.CreditResponse
+import com.imagetovideo.app.data.model.GrantCreditsRequest
+import com.imagetovideo.app.data.model.LoginRequest
+import com.imagetovideo.app.data.model.OtpVerifyRequest
+import com.imagetovideo.app.data.model.Promotion
+import com.imagetovideo.app.data.model.RegisterRequest
+import com.imagetovideo.app.data.model.SystemSetting
+import com.imagetovideo.app.data.model.TokenResponse
+import com.imagetovideo.app.data.model.TransactionHistoryResponse
+import com.imagetovideo.app.data.model.UpdateProfileRequest
+import com.imagetovideo.app.data.model.UserProfile
+import com.imagetovideo.app.data.model.VideoHistory
+import com.imagetovideo.app.data.model.VideoJob
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.Multipart
+import retrofit2.http.PATCH
+import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -24,7 +47,7 @@ interface ApiService {
     suspend fun updateProfile(@Body request: UpdateProfileRequest): Response<UserProfile>
 
     @GET("users/credits")
-    suspend fun getCredits(): Response<Map<String, Any>>
+    suspend fun getCredits(): Response<CreditResponse>
 
     @Multipart
     @POST("generate-video")
