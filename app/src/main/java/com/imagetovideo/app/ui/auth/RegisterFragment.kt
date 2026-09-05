@@ -55,8 +55,12 @@ class RegisterFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 val res = api.register(RegisterRequest(email, password, name))
-                if (res.isSuccessful) {
-                    val bundle = Bundle().apply { putString("email", email) }
+                if (res.isSuccessful && res.body() != null) {
+                    val expiresIn = res.body()!!.expiresIn
+                    val bundle = Bundle().apply { 
+                        putString("email", email) 
+                        putLong("expires_in", expiresIn)
+                    }
                     findNavController().navigate(
                         R.id.action_registerFragment_to_otpFragment,
                         bundle

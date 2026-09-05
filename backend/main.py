@@ -23,6 +23,17 @@ def get_db():
 def get_password_hash(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
+def generate_otp_data(email: str):
+    # Generate 6-digit OTP
+    otp_code = str(random.randint(100000, 999999))
+    expiry = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
+    print(f"[OTP Debug] Email: {email}, Code: {otp_code}")
+    return {
+        "otp": otp_code,
+        "expiry": expiry,
+        "expires_in": 300 # 5 minutes in seconds
+    }
+
 # --- Models cho JSON Request ---
 class LoginRequest(BaseModel):
     email: str
@@ -36,6 +47,9 @@ class RegisterRequest(BaseModel):
 class OtpVerifyRequest(BaseModel):
     email: str
     otp: str
+
+class OtpResendRequest(BaseModel):
+    email: str
 
 class UserStatusUpdate(BaseModel):
     is_locked: bool
@@ -113,11 +127,9 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
         credit_balance=initial_credits
     )
 
-    # Generate 6-digit OTP
-    otp_code = str(random.randint(100000, 999999))
-    new_user.otp = otp_code
-    new_user.otp_expiry = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
-    print(f"[OTP Debug] Email: {request.email}, Code: {otp_code}")
+    otp_data = generate_otp_data(request.email)
+    new_user.otp = otp_data["otp"]
+    new_user.otp_expiry = otp_data["expiry"]
 
     db.add(new_user)
     db.commit()
@@ -137,7 +149,10 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
         db.add(tx)
         db.commit()
         
-    return {"message": f"User created successfully with {initial_credits} credits"}
+    return {
+        "message": f"User created successfully with {initial_credits} credits",
+        "expires_in": otp_data["expires_in"]
+    }
 
 @app.post("/auth/login")
 def login(request: LoginRequest, db: Session = Depends(get_db)):
@@ -180,7 +195,23 @@ def verify_otp(request: OtpVerifyRequest, db: Session = Depends(get_db)):
             "token_type": "bearer"
         }
     else:
-        raise HTTPException(status_code=400, detail="Invalid OTP")
+        raise HTTPException(status_code=400, detail="Mã OTP không đúng!")
+
+@app.post("/auth/resend-otp")
+def resend_otp(request: OtpResendRequest, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.email == request.email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    otp_data = generate_otp_data(request.email)
+    user.otp = otp_data["otp"]
+    user.otp_expiry = otp_data["expiry"]
+    db.commit()
+
+    return {
+        "message": "Mã OTP mới đã được gửi!",
+        "expires_in": otp_data["expires_in"]
+    }
 
 @app.get("/auth/me")
 def get_me(current_user: models.User = Depends(get_current_user)):

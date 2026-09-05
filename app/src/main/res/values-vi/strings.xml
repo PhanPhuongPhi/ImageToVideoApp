@@ -65,6 +65,9 @@
     <string name="email_hint">Địa chỉ Email</string>
     <string name="password_hint">Mật khẩu</string>
     <string name="otp_hint">Nhập mã OTP 6 chữ số</string>
+    <string name="otp_timer_format">Mã hết hạn trong: %1$02d:%2$02d</string>
+    <string name="otp_resend_label">Gửi lại mã</string>
+    <string name="otp_expired">Mã OTP đã hết hạn</string>
 
     <!-- Errors -->
     <string name="error_fill_all_fields">Vui lòng nhập đủ thông tin</string>

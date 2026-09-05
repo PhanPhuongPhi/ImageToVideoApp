@@ -7,8 +7,10 @@ import com.imagetovideo.app.data.model.CreditResponse
 import com.imagetovideo.app.data.model.GrantCreditsRequest
 import com.imagetovideo.app.data.model.LoginRequest
 import com.imagetovideo.app.data.model.OtpVerifyRequest
+import com.imagetovideo.app.data.model.OtpResponse
 import com.imagetovideo.app.data.model.Promotion
 import com.imagetovideo.app.data.model.RegisterRequest
+import com.imagetovideo.app.data.model.ResendOtpRequest
 import com.imagetovideo.app.data.model.SystemSetting
 import com.imagetovideo.app.data.model.TokenResponse
 import com.imagetovideo.app.data.model.TransactionHistoryResponse
@@ -32,13 +34,16 @@ import retrofit2.http.Query
 interface ApiService {
 
     @POST("auth/register")
-    suspend fun register(@Body request: RegisterRequest): Response<Map<String, String>>
+    suspend fun register(@Body request: RegisterRequest): Response<OtpResponse>
 
     @POST("auth/login")
     suspend fun login(@Body request: LoginRequest): Response<TokenResponse>
 
     @POST("auth/verify-otp")
     suspend fun verifyOtp(@Body request: OtpVerifyRequest): Response<TokenResponse>
+
+    @POST("auth/resend-otp")
+    suspend fun resendOtp(@Body request: ResendOtpRequest): Response<OtpResponse>
 
     @GET("auth/me")
     suspend fun getMe(): Response<UserProfile>

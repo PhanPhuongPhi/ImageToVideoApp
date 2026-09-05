@@ -1,6 +1,7 @@
 from database import SessionLocal, init_db
-from models import User, CreditPackage, SystemSetting, Promotion
+from models import User, CreditPackage, SystemSetting, Promotion, Video, CreditTransaction
 import hashlib
+import datetime
 
 def get_password_hash(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -52,6 +53,29 @@ def seed_data():
             is_active=True
         )
         db.add(promo)
+
+    # Add History for Sample User
+    user = db.query(User).filter(User.email == "123").first()
+    if user and not db.query(Video).filter(Video.user_id == user.id).first():
+        v1_id = "v-001"
+        v2_id = "v-002"
+        v3_id = "v-003"
+
+        videos = [
+            Video(id=v1_id, user_id=user.id, prompt="A futuristic city in the clouds", status="COMPLETED", video_url="https://www.w3schools.com/html/mov_bbb.mp4"),
+            Video(id=v2_id, user_id=user.id, prompt="Cyberpunk cat driving a hovercar", status="COMPLETED", video_url="https://www.w3schools.com/html/movie.mp4"),
+            Video(id=v3_id, user_id=user.id, prompt="Underwater forest with bioluminescent plants", status="FAILED", error_message="AI Server Timeout")
+        ]
+        db.add_all(videos)
+
+        transactions = [
+            CreditTransaction(user_id=user.id, video_id=v1_id, amount=1, transaction_type="MINUS", reason="Tạo video AI (16:9, Job ID: v-001)"),
+            CreditTransaction(user_id=user.id, video_id=v2_id, amount=1, transaction_type="MINUS", reason="Tạo video AI (9:16, Job ID: v-002)"),
+            CreditTransaction(user_id=user.id, video_id=v3_id, amount=1, transaction_type="MINUS", reason="Tạo video AI (1:1, Job ID: v-003)"),
+            CreditTransaction(user_id=user.id, video_id=v3_id, amount=1, transaction_type="PLUS", reason="Hoàn Credit do tạo video thất bại (Job ID: v-003)"),
+            CreditTransaction(user_id=user.id, amount=50, transaction_type="PLUS", reason="Mua gói Credit: Starter")
+        ]
+        db.add_all(transactions)
 
     db.commit()
     db.close()

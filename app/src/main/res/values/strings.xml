@@ -65,6 +65,9 @@
     <string name="email_hint">Email Address</string>
     <string name="password_hint">Password</string>
     <string name="otp_hint">Enter 6-digit OTP code</string>
+    <string name="otp_timer_format">Expires in: %1$02d:%2$02d</string>
+    <string name="otp_resend_label">Resend OTP</string>
+    <string name="otp_expired">OTP has expired</string>
 
     <!-- Errors -->
     <string name="error_fill_all_fields">Please fill all fields</string>
