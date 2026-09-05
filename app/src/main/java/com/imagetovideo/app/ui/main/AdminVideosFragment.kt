@@ -1,21 +1,23 @@
 package com.imagetovideo.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.imagetovideo.app.data.api.RetrofitClient
-import com.imagetovideo.app.data.model.AdminVideoItem
-import com.imagetovideo.app.databinding.FragmentAdminVideosBinding
-import com.imagetovideo.app.ui.adapter.AdminVideoAdapter
-import com.imagetovideo.app.databinding.DialogVideoPlayerBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.imagetovideo.app.R
+import com.imagetovideo.app.data.api.RetrofitClient
+import com.imagetovideo.app.data.model.AdminVideoItem
+import com.imagetovideo.app.databinding.DialogVideoPlayerBinding
+import com.imagetovideo.app.databinding.FragmentAdminVideosBinding
+import com.imagetovideo.app.ui.adapter.AdminVideoAdapter
 import kotlinx.coroutines.launch
 
 class AdminVideosFragment : Fragment() {
@@ -60,7 +62,11 @@ class AdminVideosFragment : Fragment() {
                     adapter.updateData(res.body()!!)
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi tải danh sách video", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    getString(R.string.error_load_video, e.localizedMessage),
+                    Toast.LENGTH_SHORT
+                ).show()
             } finally {
                 _binding?.swipeRefreshAdminVideos?.isRefreshing = false
             }
@@ -75,13 +81,13 @@ class AdminVideosFragment : Fragment() {
 
         dialogBinding.txtPlayerPrompt.text = video.prompt
         val fullVideoUrl = RetrofitClient.resolveMediaUrl(video.videoUrl)
-        
+
         val player = ExoPlayer.Builder(requireContext()).build().apply {
             setMediaItem(MediaItem.fromUri(fullVideoUrl))
             prepare()
             playWhenReady = true
         }
-        
+
         dialogBinding.dialogPlayerView.player = player
         dialogBinding.btnClosePlayer.setOnClickListener { dialog.dismiss() }
         dialog.setOnDismissListener { player.release() }
@@ -90,10 +96,10 @@ class AdminVideosFragment : Fragment() {
 
     private fun confirmDelete(video: AdminVideoItem) {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Xóa Video")
-            .setMessage("Bạn có chắc chắn muốn xóa video này không?")
-            .setNegativeButton("Hủy", null)
-            .setPositiveButton("Xóa") { _, _ ->
+            .setTitle(R.string.dialog_delete_video_title)
+            .setMessage(R.string.dialog_delete_video_msg)
+            .setNegativeButton(R.string.btn_cancel, null)
+            .setPositiveButton(R.string.btn_delete) { _, _ ->
                 deleteVideo(video.id)
             }
             .show()
@@ -105,11 +111,12 @@ class AdminVideosFragment : Fragment() {
             try {
                 val res = api.adminDeleteVideo(videoId)
                 if (res.isSuccessful) {
-                    Toast.makeText(context, "Đã xóa video", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.msg_video_deleted, Toast.LENGTH_SHORT).show()
                     loadVideos()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi khi xóa", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.msg_video_delete_error, Toast.LENGTH_SHORT).show()
+                Log.e("Admin", e.localizedMessage ?: "Unknown")
             }
         }
     }

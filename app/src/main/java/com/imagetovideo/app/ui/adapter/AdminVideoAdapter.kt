@@ -21,9 +21,10 @@ class AdminVideoAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = videos[position]
-        holder.binding.txtAdminVideoUser.text = "User: ${item.userEmail}"
+        val context = holder.itemView.context
+        holder.binding.txtAdminVideoUser.text = context.getString(com.imagetovideo.app.R.string.admin_video_user, item.userEmail)
         holder.binding.txtAdminVideoPrompt.text = item.prompt
-        holder.binding.txtAdminVideoStatus.text = "Status: ${item.status}"
+        holder.binding.txtAdminVideoStatus.text = context.getString(com.imagetovideo.app.R.string.admin_video_status, item.status)
         
         holder.binding.root.setOnClickListener { onVideoClick(item) }
         holder.binding.btnAdminDeleteVideo.setOnClickListener { onDeleteClick(item) }

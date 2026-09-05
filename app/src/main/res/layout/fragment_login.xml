@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Đăng Nhập"
+        android:text="@string/login"
         android:textColor="@color/text_primary"
         android:textSize="26sp"
         android:textStyle="bold" />
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Ứng dụng biến ảnh thành Video AI"
+        android:text="@string/login_subtitle"
         android:textColor="@color/text_secondary"
         android:textSize="14sp" />
 
@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:padding="8dp"
-        android:text="Chưa có tài khoản? Đăng ký ngay"
+        android:text="@string/login_btn_to_register"
         android:textColor="@color/cyan_accent"
         android:textSize="14sp" />
 

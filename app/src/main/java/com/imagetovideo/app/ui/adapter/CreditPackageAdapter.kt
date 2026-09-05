@@ -20,9 +20,10 @@ class CreditPackageAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
+        val context = holder.itemView.context
         holder.binding.packageName.text = item.name
-        holder.binding.packageCredits.text = "${item.credits} Credits"
-        holder.binding.packagePrice.text = "${String.format("%,.0f", item.price)} VND"
+        holder.binding.packageCredits.text = context.getString(com.imagetovideo.app.R.string.credits_balance, item.credits.toString())
+        holder.binding.packagePrice.text = "${String.format("%,.0f", item.price)} ${context.getString(com.imagetovideo.app.R.string.currency_vnd)}"
         
         holder.binding.btnBuy.setOnClickListener {
             onBuyClick(item)

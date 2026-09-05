@@ -2,12 +2,14 @@ package com.imagetovideo.app.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+
 import androidx.navigation.fragment.findNavController
 import com.imagetovideo.app.R
 import com.imagetovideo.app.data.api.RetrofitClient
@@ -23,8 +25,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
@@ -38,7 +39,7 @@ class LoginFragment : Fragment() {
             val password = binding.edtPassword.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(context, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_fill_all_fields, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -67,17 +68,18 @@ class LoginFragment : Fragment() {
                     if (profileRes.isSuccessful && profileRes.body() != null) {
                         val userProfile = profileRes.body()!!
                         tokenManager.saveUserRole(userProfile.role)
-                        Toast.makeText(context, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show()
                     }
 
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     requireActivity().finish()
                 } else {
-                    val errorMsg = res.errorBody()?.string() ?: "Đăng nhập thất bại!"
+                    val errorMsg = res.errorBody()?.string() ?: getString(R.string.login_failed)
                     Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi kết nối: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+            } catch (error: Exception) {
+                Toast.makeText(context, R.string.error_connection, Toast.LENGTH_SHORT).show()
+                Log.e("Auth", error.localizedMessage ?: "Unknown")
             }
         }
     }

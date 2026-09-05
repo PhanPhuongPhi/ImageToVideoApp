@@ -14,6 +14,8 @@ class User(Base):
     role = Column(String, default="guest") # admin, guest
     credit_balance = Column(Integer, default=0)
     is_locked = Column(Boolean, default=False)
+    otp = Column(String, nullable=True)
+    otp_expiry = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
     videos = relationship("Video", back_populates="owner")
@@ -35,12 +37,14 @@ class CreditTransaction(Base):
     __tablename__ = "credit_transactions"
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
+    video_id = Column(String, ForeignKey("videos.id"), nullable=True)
     amount = Column(Integer)
     transaction_type = Column(String) # PLUS, MINUS
     reason = Column(String)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
     user = relationship("User", back_populates="transactions")
+    video = relationship("Video")
 
 class CreditPackage(Base):
     __tablename__ = "credit_packages"

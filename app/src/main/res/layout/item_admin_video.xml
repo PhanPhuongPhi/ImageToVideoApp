@@ -27,7 +27,7 @@
                 android:id="@+id/txtAdminVideoUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="User: admin@gmail.com"
+                android:text="@string/nav_profile"
                 android:textColor="@color/purple_accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -39,7 +39,7 @@
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="Prompt description goes here..."
+                android:text="@string/placeholder_prompt"
                 android:textColor="@color/text_primary"
                 android:textSize="15sp" />
 
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Status: COMPLETED"
+                android:text="@string/studio_result_title"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -60,7 +60,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_upload"
             app:tint="@color/red_accent"
-            android:contentDescription="Xóa video"
+            android:contentDescription="@string/btn_delete"
             android:rotation="45" />
 
     </LinearLayout>

@@ -21,8 +21,7 @@ class CreditPackagesFragment : Fragment() {
     private lateinit var adapter: CreditPackageAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCreditPackagesBinding.inflate(inflater, container, false)
         return binding.root
@@ -49,7 +48,9 @@ class CreditPackagesFragment : Fragment() {
                     adapter.updateData(res.body()!!.items)
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi tải gói nạp: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context, getString(R.string.error_load_packages, e.localizedMessage), Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -60,13 +61,20 @@ class CreditPackagesFragment : Fragment() {
             try {
                 val res = api.purchaseCredit(packageId)
                 if (res.isSuccessful) {
-                    Toast.makeText(context, R.string.credit_purchase_success, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.credit_purchase_success, Toast.LENGTH_LONG)
+                        .show()
                     (activity as? MainActivity)?.fetchCredits()
                 } else {
-                    Toast.makeText(context, "Thanh toán thất bại!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context, getString(R.string.credit_error_purchase), Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    getString(R.string.error_generic, e.localizedMessage),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

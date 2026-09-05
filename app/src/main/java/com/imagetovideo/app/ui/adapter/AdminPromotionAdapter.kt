@@ -18,10 +18,15 @@ class AdminPromotionAdapter(private var promos: List<Promotion>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val promo = promos[position]
+        val context = holder.itemView.context
         holder.binding.txtPromoName.text = promo.name
-        holder.binding.txtPromoReward.text = "Thưởng: ${promo.rewardCredits} Credits"
-        holder.binding.txtPromoDuration.text = "${promo.startDate} đến ${promo.endDate}"
-        holder.binding.txtPromoStatus.text = if (promo.isActive) "Trạng thái: Đang chạy" else "Trạng thái: Kết thúc"
+        holder.binding.txtPromoReward.text = context.getString(com.imagetovideo.app.R.string.admin_promo_reward_formatted, promo.rewardCredits)
+        holder.binding.txtPromoDuration.text = context.getString(com.imagetovideo.app.R.string.date_range_formatted, promo.startDate, promo.endDate)
+        holder.binding.txtPromoStatus.text = if (promo.isActive) {
+            context.getString(com.imagetovideo.app.R.string.admin_promo_status_active)
+        } else {
+            context.getString(com.imagetovideo.app.R.string.admin_promo_status_inactive)
+        }
     }
 
     override fun getItemCount() = promos.size

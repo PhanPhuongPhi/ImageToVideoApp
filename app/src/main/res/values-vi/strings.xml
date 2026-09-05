@@ -1,0 +1,201 @@
+<resources>
+    <string name="app_name">Image To Video</string>
+
+    <!-- Nav Titles -->
+    <string name="nav_studio">Studio</string>
+    <string name="nav_creations">Bộ sưu tập</string>
+    <string name="nav_explore">Khám phá</string>
+    <string name="nav_profile">Tài khoản</string>
+
+    <!-- Studio -->
+    <string name="studio_title">AI Video Generator</string>
+    <string name="studio_select_image">Tải ảnh đầu vào</string>
+    <string name="studio_prompt_hint">Mô tả chuyển động (VD: Camera zoom in slow motion, cinematic lighting&#8230;)</string>
+    <string name="studio_subtitle">Tạo video chuyển động ấn tượng từ bức ảnh của bạn</string>
+    <string name="studio_placeholder_text">Chạm để chọn từ thư viện</string>
+    <string name="studio_prompt_label">Mô Tả Chuyển Động (Prompt)</string>
+    <string name="studio_processing">Đang xử lý tạo video AI&#8230; (%1$ds)</string>
+    <string name="studio_result_title">Kết Quả AI Video</string>
+    <string name="studio_btn_save">Lưu vào bộ sưu tập App</string>
+    <string name="studio_save_success">Đã lưu video vào App thành công!</string>
+    <string name="studio_save_error">Lỗi khi lưu video!</string>
+    <string name="studio_save_error_detail">Lỗi khi lưu video!</string>
+    <string name="studio_success_msg">Chúc mừng! Video AI của bạn đã được tạo thành công.</string>
+    <string name="studio_btn_download">Tải về máy</string>
+    <string name="studio_btn_share">Chia sẻ video</string>
+    <string name="studio_share_text">Xem video AI của tôi được tạo từ Image To Video App: %1$s</string>
+    <string name="studio_completed">Hoàn tất!</string>
+    <string name="studio_generate_failed">Tạo video thất bại</string>
+    <string name="studio_not_found_on_server">Không tìm thấy thông tin video trên Server. Vui lòng thử lại!</string>
+    <string name="studio_saving">Đang lưu…</string>
+    <string name="studio_auto_save_success">Video đã được tự động lưu vào App!</string>
+    <string name="studio_download_failed">Tải video thất bại</string>
+    <string name="studio_download_started">Đã bắt đầu tải video về máy!</string>
+    <string name="studio_download_error_prefix">Lỗi tải về!</string>
+    <string name="studio_init_failed">Không thể khởi tạo tiến trình tạo video!</string>
+    <string name="studio_notification_denied">Thông báo bị từ chối. Bạn sẽ không nhận được tin nhắn khi video hoàn thành.</string>
+    <string name="creations_title">Bộ Sưu Tập Video</string>
+    <string name="creations_subtitle">Tất cả các tác phẩm video AI đã khởi tạo của bạn</string>
+    <string name="credits_balance">%1$s Credits</string>
+    <string name="credits_default">0 Credits</string>
+    <string name="profile_title">Thông Tin Tài Khoản</string>
+    <string name="profile_credit_label">Số dư Credit hiện tại:</string>
+    <string name="profile_edit_title">Cập nhật hồ sơ</string>
+    <string name="logout_btn">Đăng Xuất</string>
+    <string name="desc_app_logo">Logo ứng dụng</string>
+    <string name="desc_preview_image">Ảnh xem trước</string>
+    <string name="desc_credit_icon">Icon Credits</string>
+    <string name="studio_btn_generate">Tạo Video (1 Credit)</string>
+    <string name="studio_generating">Đang sinh video AI…</string>
+
+    <!-- Auth -->
+    <string name="login">Đăng nhập</string>
+    <string name="login_subtitle">Ứng dụng biến ảnh thành Video AI</string>
+    <string name="login_btn_to_register">Chưa có tài khoản? Đăng ký ngay</string>
+    <string name="login_success">Đăng nhập thành công!</string>
+    <string name="login_failed">Đăng nhập thất bại!</string>
+    <string name="register">Đăng ký</string>
+    <string name="register_subtitle">Nhập email và mật khẩu để bắt đầu</string>
+    <string name="register_btn_to_login">Đã có tài khoản? Đăng nhập</string>
+    <string name="register_failed">Đăng ký thất bại!</string>
+    <string name="verify_otp">Xác thực OTP</string>
+    <string name="auth_otp_title">Xác Thực Email</string>
+    <string name="auth_otp_subtitle">Mã OTP đã được gửi đến email của bạn</string>
+    <string name="auth_otp_btn">Xác Thực &amp; Tiếp Tục</string>
+    <string name="email_hint">Địa chỉ Email</string>
+    <string name="password_hint">Mật khẩu</string>
+    <string name="otp_hint">Nhập mã OTP 6 chữ số</string>
+    <string name="otp_timer_format">Mã hết hạn trong: %1$02d:%2$02d</string>
+    <string name="otp_resend_label">Gửi lại mã</string>
+    <string name="otp_expired">Mã OTP đã hết hạn</string>
+
+    <!-- Errors -->
+    <string name="error_fill_all_fields">Vui lòng nhập đủ thông tin</string>
+    <string name="error_connection">Lỗi kết nối!</string>
+    <string name="error_connection_general">Lỗi kết nối!</string>
+    <string name="error_otp_invalid">Mã OTP gồm 6 chữ số</string>
+    <string name="error_otp_wrong">Mã OTP không đúng!</string>
+    <string name="error_register_fill_all">Vui lòng nhập đầy đủ họ tên, email và mật khẩu</string>
+    <string name="error_load_profile">Lỗi tải thông tin cá nhân! %1$s</string>
+    <string name="error_logout_success">Đã đăng xuất!</string>
+    <string name="error_update_profile_empty">Vui lòng nhập thông tin cần thay đổi!</string>
+    <string name="error_update_profile_success">Cập nhật hồ sơ thành công!</string>
+    <string name="error_load_history">Lỗi tải lịch sử: %1$s</string>
+    <string name="error_load_packages">Lỗi tải gói nạp: %1$s</string>
+    <string name="error_load_promotions">Lỗi tải khuyến mãi: %1$s</string>
+
+    <!-- Admin -->
+    <string name="admin_panel_title">Admin Control Panel</string>
+    <string name="admin_grant_subtitle">Grant Credits to User</string>
+    <string name="admin_email_hint">User Email</string>
+    <string name="admin_amount_hint">Credit Amount</string>
+    <string name="admin_btn_grant">Grant Credits</string>
+    <string name="admin_fill_fields">Please fill all fields</string>
+    <string name="admin_invalid_amount">Invalid amount</string>
+    <string name="admin_grant_success">Successfully granted %1$d credits to %2$s</string>
+    <string name="admin_grant_failed">Failed to grant credits: %1$s</string>
+    <string name="admin_dashboard_title">Thống kê Dashboard</string>
+    <string name="admin_chart_video_title">Tỷ lệ Video thành công</string>
+    <string name="admin_settings_title">Cấu hình hệ thống</string>
+    <string name="admin_settings_cost_label">Chi phí tạo video (Credits)</string>
+    <string name="admin_settings_btn_save">Lưu cấu hình hệ thống</string>
+    <string name="admin_settings_save_success">Đã cập nhật cấu hình hệ thống!</string>
+    <string name="admin_grant_credits_success">Cấp Credit thành công!</string>
+
+    <!-- Admin Stats -->
+    <string name="admin_stats_total_users">Tổng User</string>
+    <string name="admin_stats_new_users">User Mới (Hôm nay)</string>
+    <string name="admin_stats_videos_success">Video Thành Công</string>
+    <string name="admin_stats_videos_failed">Video Thất Bại</string>
+    <string name="admin_stats_revenue">Doanh Thu</string>
+    <string name="admin_stats_active_promotions">Khuyến Mãi Đang Chạy</string>
+
+    <!-- Admin Tabs -->
+    <string name="admin_tab_dashboard">Thống kê</string>
+    <string name="admin_tab_users">Người dùng</string>
+    <string name="admin_tab_videos">Video</string>
+    <string name="admin_tab_promotions">Khuyến mãi</string>
+    <string name="admin_tab_settings">Cài đặt</string>
+
+    <!-- Admin User Management -->
+    <string name="admin_user_search_hint">Tìm kiếm email…</string>
+    <string name="admin_user_lock">Khóa</string>
+    <string name="admin_user_unlock">Mở khóa</string>
+    <string name="admin_user_status_active">Hoạt động</string>
+    <string name="admin_user_status_locked">Đã khóa</string>
+    <string name="admin_user_role_balance">Quyền: %1$s | Số dư: %2$d</string>
+    <string name="admin_user_locked_msg">Đã khóa tài khoản</string>
+    <string name="admin_user_unlocked_msg">Đã mở khóa tài khoản</string>
+
+    <!-- Admin Promotions -->
+    <string name="admin_promo_create">Tạo khuyến mãi</string>
+    <string name="admin_promo_name">Tên khuyến mãi</string>
+    <string name="admin_promo_reward">Số Credit tặng</string>
+    <string name="admin_promo_start">Ngày bắt đầu</string>
+    <string name="admin_promo_end">Ngày kết thúc</string>
+    <string name="admin_promo_success">Đã tạo chương trình khuyến mãi thành công!</string>
+    <string name="admin_promo_reward_formatted">Thưởng: %1$d Credits</string>
+    <string name="admin_promo_status_active">Trạng thái: Đang chạy</string>
+    <string name="admin_promo_status_inactive">Trạng thái: Không hoạt động</string>
+
+    <!-- Admin Videos -->
+    <string name="admin_video_user">User: %1$s</string>
+    <string name="admin_video_status">Status: %1$s</string>
+    <string name="dialog_delete_video_title">Xóa Video</string>
+    <string name="dialog_delete_video_msg">Bạn có chắc chắn muốn xóa video này không?</string>
+    <string name="msg_video_deleted">Đã xóa video</string>
+    <string name="msg_video_delete_error">Lỗi khi xóa</string>
+
+    <!-- Credit History & Packages -->
+    <string name="credit_history_title">Lịch sử giao dịch</string>
+    <string name="credit_packages_title">Mua thêm Credit</string>
+    <string name="credit_history_empty">Chưa có giao dịch nào.</string>
+    <string name="credit_buy_now">Mua ngay</string>
+    <string name="credit_purchase_success">Nạp credit thành công!</string>
+    <string name="credit_purchase_failed">Thanh toán thất bại!</string>
+    <string name="credit_insufficient">Bạn không đủ Credit. Vui lòng nạp thêm!</string>
+    <string name="transaction_prompt_label">Prompt: %1$s</string>
+    <string name="currency_vnd">VND</string>
+
+    <!-- Explore -->
+    <string name="explore_title">Khám Phá Cộng Đồng</string>
+    <string name="explore_subtitle">Tham khảo các mẫu video độc đáo sáng tạo từ cộng đồng</string>
+    <string name="explore_view_sample">Xem mẫu: %1$s</string>
+    <string name="explore_load_error">Lỗi tải cộng đồng!</string>
+
+    <!-- Common -->
+    <string name="btn_update">Cập nhật</string>
+    <string name="btn_close">Đóng</string>
+    <string name="btn_edit">Chỉnh sửa</string>
+    <string name="btn_cancel">Hủy</string>
+    <string name="btn_delete">Xóa</string>
+    <string name="msg_load_creations_error">Lỗi tải bộ sưu tập!</string>
+    <string name="chart_success">Thành công</string>
+    <string name="chart_failed">Thất bại</string>
+    <string name="chart_video_rate">Tỷ lệ Video</string>
+    <string name="picker_start_date">Chọn ngày bắt đầu</string>
+    <string name="picker_end_date">Chọn ngày kết thúc</string>
+    <string name="date_range_formatted">%1$s đến %2$s</string>
+    <string name="role_label">Quyền hạn: %1$s</string>
+    <string name="placeholder_user_name">Tên người dùng</string>
+    <string name="placeholder_prompt">Mô tả prompt ở đây…</string>
+    <string name="placeholder_reason">Lý do</string>
+    <string name="placeholder_date">Ngày</string>
+    <string name="placeholder_email">user@example.com</string>
+    <string name="msg_loading">Đang tải…</string>
+
+    <!-- Notifications -->
+    <string name="notification_title">Video AI đã tạo xong!</string>
+    <string name="notification_text">Video của bạn: \"%1$s\" đã sẵn sàng.</string>
+
+    <string name="placeholder_name">Họ và tên (Tùy chọn)</string>
+    <string name="placeholder_new_password">Mật khẩu mới (Tùy chọn)</string>
+    <string name="placeholder_role_balance">Quyền: guest | Số dư: 0</string>
+    <string name="demo_prefix">[Bản Demo] </string>
+    <string name="studio_select_image_error">Không thể chọn ảnh</string>
+    <string name="error_generic">Lỗi: %1$s</string>
+    <string name="studio_prompt_empty_error">Prompt trống, vui lòng thử lại</string>
+    <string name="error_load_video">Lỗi tải danh sách video: %1$s</string>
+    <string name="credit_error_purchase">Thanh toán thất bại!</string>
+    <string name="name_hint">Tên</string>
+</resources>

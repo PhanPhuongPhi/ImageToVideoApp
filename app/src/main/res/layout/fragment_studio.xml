@@ -207,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Chúc mừng! Video AI của bạn đã được tạo thành công."
+                android:text="@string/studio_success_msg"
                 android:textColor="@color/emerald_accent"
                 android:textStyle="bold"
                 android:visibility="gone" />
@@ -264,7 +264,7 @@
                     android:layout_width="0dp"
                     android:layout_height="54dp"
                     android:layout_weight="1"
-                    android:text="Tải về máy"
+                    android:text="@string/studio_btn_download"
                     app:icon="@drawable/ic_upload" />
 
             </LinearLayout>
@@ -275,7 +275,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Chia sẻ video"
+                android:text="@string/studio_btn_share"
                 app:icon="@android:drawable/ic_menu_share" />
         </LinearLayout>
 

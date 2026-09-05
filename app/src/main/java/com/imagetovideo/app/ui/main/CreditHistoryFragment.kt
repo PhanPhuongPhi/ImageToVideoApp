@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.imagetovideo.app.R
 import com.imagetovideo.app.data.api.RetrofitClient
 import com.imagetovideo.app.databinding.FragmentCreditHistoryBinding
 import com.imagetovideo.app.ui.adapter.CreditTransactionAdapter
@@ -54,7 +55,7 @@ class CreditHistoryFragment : Fragment() {
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi tải lịch sử: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.error_load_history, e.localizedMessage), Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -23,6 +23,19 @@ data class OtpVerifyRequest(
     val otp: String
 )
 
+data class ResendOtpRequest(
+    val email: String
+)
+
+data class OtpResponse(
+    val message: String,
+    @SerializedName("expires_in") val expiresIn: Long
+)
+
+data class CreditResponse(
+    @SerializedName("credit_balance") val creditBalance: Int
+)
+
 data class UserProfile(
     val id: String,
     val email: String,

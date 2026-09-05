@@ -1,12 +1,14 @@
 package com.imagetovideo.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.imagetovideo.app.R
 import com.imagetovideo.app.data.api.RetrofitClient
 import com.imagetovideo.app.databinding.FragmentExploreBinding
 import com.imagetovideo.app.ui.adapter.VideoAdapter
@@ -30,7 +32,11 @@ class ExploreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = VideoAdapter { video ->
-            Toast.makeText(context, "Xem mẫu: ${video.prompt}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                getString(R.string.explore_view_sample, video.prompt),
+                Toast.LENGTH_SHORT
+            ).show()
         }
         binding.rvExplore.adapter = adapter
 
@@ -44,17 +50,20 @@ class ExploreFragment : Fragment() {
     private fun loadExploreFeed() {
         val api = RetrofitClient.getApiService(requireContext())
 
-        lifecycleScope.launch {
-            binding.swipeRefreshExplore.isRefreshing = true
+        viewLifecycleOwner.lifecycleScope.launch {
+            _binding?.swipeRefreshExplore?.isRefreshing = true
             try {
                 val res = api.getVideoHistory(page = 1, limit = 20)
                 if (res.isSuccessful && res.body() != null) {
                     adapter.submitList(res.body()!!.items)
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi tải cộng đồng!", Toast.LENGTH_SHORT).show()
+                if (isAdded) {
+                    Toast.makeText(context, R.string.explore_load_error, Toast.LENGTH_SHORT).show()
+                    Log.e("Explore", e.localizedMessage ?: "Unknown")
+                }
             } finally {
-                binding.swipeRefreshExplore.isRefreshing = false
+                _binding?.swipeRefreshExplore?.isRefreshing = false
             }
         }
     }

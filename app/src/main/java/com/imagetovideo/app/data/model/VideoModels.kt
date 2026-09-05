@@ -9,6 +9,14 @@ data class VideoJob(
     @SerializedName("error_message") val errorMessage: String? = null
 )
 
+object VideoStatus {
+    const val PENDING = "PENDING"
+    const val PROCESSING = "PROCESSING"
+    const val COMPLETED = "COMPLETED"
+    const val FAILED = "FAILED"
+    const val ERROR = "ERROR"
+}
+
 data class VideoHistory(
     val items: List<VideoItem>,
     val total: Int,

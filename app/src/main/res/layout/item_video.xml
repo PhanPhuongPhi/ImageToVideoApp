@@ -40,7 +40,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="8dp"
-            android:text="Prompt..."
+            android:text="@string/placeholder_prompt"
             android:textColor="@color/text_primary"
             android:textSize="12sp" />
 
@@ -50,9 +50,9 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="8dp"
             android:paddingBottom="8dp"
-            android:text="2026-08-13"
+            android:text="@string/placeholder_date"
             android:textColor="@color/text_muted"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -29,7 +29,11 @@ class AdminUserAdapter(
         }
         
         holder.binding.txtUserEmail.text = user.email
-        holder.binding.txtUserRoleStatus.text = "Quyền: ${user.role} | Số dư: ${user.creditBalance}"
+        holder.binding.txtUserRoleStatus.text = holder.itemView.context.getString(
+            com.imagetovideo.app.R.string.admin_user_role_balance,
+            user.role,
+            user.creditBalance
+        )
         
         holder.binding.switchLockUser.setOnCheckedChangeListener(null)
         holder.binding.switchLockUser.isChecked = user.isLocked

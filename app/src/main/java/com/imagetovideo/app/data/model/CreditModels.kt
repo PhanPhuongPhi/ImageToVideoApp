@@ -10,6 +10,8 @@ data class CreditTransaction(
     @SerializedName("amount") val amount: Int,
     @SerializedName("transaction_type") val type: String, // "PLUS" hoặc "MINUS"
     @SerializedName("reason") val reason: String,
+    @SerializedName("prompt") val prompt: String? = null,
+    @SerializedName("video_id") val videoId: String? = null,
     @SerializedName("created_at") val createdAt: String
 )
 

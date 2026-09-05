@@ -1,6 +1,7 @@
 package com.imagetovideo.app.ui.auth
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,7 @@ class RegisterFragment : Fragment() {
             val password = binding.edtRegisterPassword.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
-                Toast.makeText(context, "Vui lòng nhập đầy đủ họ tên, email và mật khẩu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_register_fill_all, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -54,14 +55,23 @@ class RegisterFragment : Fragment() {
         lifecycleScope.launch {
             try {
                 val res = api.register(RegisterRequest(email, password, name))
-                if (res.isSuccessful) {
-                    val bundle = Bundle().apply { putString("email", email) }
-                    findNavController().navigate(R.id.action_registerFragment_to_otpFragment, bundle)
+                if (res.isSuccessful && res.body() != null) {
+                    val expiresIn = res.body()!!.expiresIn
+                    val bundle = Bundle().apply { 
+                        putString("email", email) 
+                        putLong("expires_in", expiresIn)
+                    }
+                    findNavController().navigate(
+                        R.id.action_registerFragment_to_otpFragment,
+                        bundle
+                    )
                 } else {
-                    Toast.makeText(context, "Đăng ký thất bại!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.register_failed, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(context, "Lỗi kết nối!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.error_connection_general, Toast.LENGTH_SHORT)
+                    .show()
+                Log.e("Network", e.localizedMessage ?: "Unknown")
             }
         }
     }

@@ -1,20 +1,22 @@
 package com.imagetovideo.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.imagetovideo.app.data.api.RetrofitClient
-import com.imagetovideo.app.databinding.FragmentCreationsBinding
-import com.imagetovideo.app.data.model.VideoItem
-import com.imagetovideo.app.databinding.DialogVideoPlayerBinding
-import com.imagetovideo.app.ui.adapter.VideoAdapter
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.imagetovideo.app.R
+import com.imagetovideo.app.data.api.RetrofitClient
+import com.imagetovideo.app.data.model.VideoItem
+import com.imagetovideo.app.databinding.DialogVideoPlayerBinding
+import com.imagetovideo.app.databinding.FragmentCreationsBinding
+import com.imagetovideo.app.ui.adapter.VideoAdapter
 import kotlinx.coroutines.launch
 
 class CreationsFragment : Fragment() {
@@ -57,8 +59,10 @@ class CreationsFragment : Fragment() {
                     adapter.submitList(res.body()!!.items)
                 }
             } catch (e: Exception) {
+                Log.e("Creation", e.localizedMessage ?: "Unknown")
                 if (_binding != null) {
-                    Toast.makeText(context, "Lỗi tải bộ sưu tập!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.msg_load_creations_error, Toast.LENGTH_SHORT)
+                        .show()
                 }
             } finally {
                 _binding?.swipeRefresh?.isRefreshing = false
@@ -73,25 +77,25 @@ class CreationsFragment : Fragment() {
             .create()
 
         dialogBinding.txtPlayerPrompt.text = video.prompt
-        
+
         val fullVideoUrl = RetrofitClient.resolveMediaUrl(video.videoUrl)
-        
+
         val player = ExoPlayer.Builder(requireContext()).build().apply {
             setMediaItem(MediaItem.fromUri(fullVideoUrl))
             prepare()
             playWhenReady = true
         }
-        
+
         dialogBinding.dialogPlayerView.player = player
-        
+
         dialogBinding.btnClosePlayer.setOnClickListener {
             dialog.dismiss()
         }
-        
+
         dialog.setOnDismissListener {
             player.release()
         }
-        
+
         dialog.show()
     }
 

@@ -1,18 +1,19 @@
 package com.imagetovideo.app.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.imagetovideo.app.data.api.RetrofitClient
-import com.imagetovideo.app.databinding.FragmentAdminDashboardBinding
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
+import com.imagetovideo.app.R
+import com.imagetovideo.app.data.api.RetrofitClient
+import com.imagetovideo.app.databinding.FragmentAdminDashboardBinding
 import kotlinx.coroutines.launch
 
 class AdminDashboardFragment : Fragment() {
@@ -40,11 +41,19 @@ class AdminDashboardFragment : Fragment() {
                 val res = api.getAdminStats()
                 if (res.isSuccessful && res.body() != null) {
                     val stats = res.body()!!
-                    updateUI(stats.totalUsers, stats.newUsersToday, stats.totalVideosSuccess, stats.totalVideosFailed, stats.totalRevenue, stats.activePromotionsCount)
+                    updateUI(
+                        stats.totalUsers,
+                        stats.newUsersToday,
+                        stats.totalVideosSuccess,
+                        stats.totalVideosFailed,
+                        stats.totalRevenue,
+                        stats.activePromotionsCount
+                    )
                 } else {
                     showMockStats()
                 }
             } catch (e: Exception) {
+                Log.e("Admin", e.localizedMessage ?: "Unknown")
                 showMockStats()
             }
         }
@@ -54,7 +63,14 @@ class AdminDashboardFragment : Fragment() {
         updateUI(150, 12, 1240, 5, 2500000.0, 3)
     }
 
-    private fun updateUI(users: Int, newUsers: Int, videoOk: Int, videoFail: Int, rev: Double, promos: Int) {
+    private fun updateUI(
+        users: Int,
+        newUsers: Int,
+        videoOk: Int,
+        videoFail: Int,
+        rev: Double,
+        promos: Int
+    ) {
         binding.txtStatTotalUsers.text = users.toString()
         binding.txtStatNewUsers.text = newUsers.toString()
         binding.txtStatVideosSuccess.text = videoOk.toString()
@@ -67,13 +83,13 @@ class AdminDashboardFragment : Fragment() {
 
     private fun setupPieChart(success: Int, failed: Int) {
         val entries = ArrayList<PieEntry>()
-        entries.add(PieEntry(success.toFloat(), "Thành công"))
-        entries.add(PieEntry(failed.toFloat(), "Thất bại"))
+        entries.add(PieEntry(success.toFloat(), getString(R.string.chart_success)))
+        entries.add(PieEntry(failed.toFloat(), getString(R.string.chart_failed)))
 
         val dataSet = PieDataSet(entries, "")
         dataSet.colors = listOf(
-            android.graphics.Color.parseColor("#10B981"), // emerald_accent
-            android.graphics.Color.parseColor("#EF4444")  // red_accent
+            "#10B981".toColorInt(), // emerald_accent
+            "#EF4444".toColorInt()  // red_accent
         )
         dataSet.valueTextSize = 14f
         dataSet.valueTextColor = android.graphics.Color.WHITE
@@ -81,7 +97,7 @@ class AdminDashboardFragment : Fragment() {
         val data = PieData(dataSet)
         binding.pieChartVideos.data = data
         binding.pieChartVideos.description.isEnabled = false
-        binding.pieChartVideos.centerText = "Tỷ lệ Video"
+        binding.pieChartVideos.centerText = getString(R.string.chart_video_rate)
         binding.pieChartVideos.setCenterTextColor(android.graphics.Color.WHITE)
         binding.pieChartVideos.setHoleColor(android.graphics.Color.TRANSPARENT)
         binding.pieChartVideos.legend.isEnabled = false

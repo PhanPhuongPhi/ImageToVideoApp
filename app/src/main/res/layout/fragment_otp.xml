@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Xác Thực Email"
+        android:text="@string/auth_otp_title"
         android:textColor="@color/text_primary"
         android:textSize="26sp"
         android:textStyle="bold" />
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="Mã OTP đã được gửi đến email của bạn"
+        android:text="@string/auth_otp_subtitle"
         android:textColor="@color/text_secondary"
         android:textSize="14sp" />
 
@@ -57,9 +57,28 @@
         android:layout_height="54dp"
         android:layout_marginTop="24dp"
         android:backgroundTint="@color/purple_accent"
-        android:text="Xác Thực &amp; Tiếp Tục"
+        android:text="@string/auth_otp_btn"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:cornerRadius="12dp" />
+
+    <TextView
+        android:id="@+id/txtOtpTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/btnResendOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:text="@string/otp_resend_label"
+        android:textColor="@color/cyan_accent"
+        android:textSize="14sp"
+        android:visibility="gone" />
 
 </LinearLayout>
